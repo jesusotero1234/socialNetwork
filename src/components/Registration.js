@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import axios from "./axios";
+import { Link } from 'react-router-dom';
 
 export default class Registration extends React.Component {
     constructor() {
@@ -23,9 +24,9 @@ export default class Registration extends React.Component {
     registerUser(e) {
         e.preventDefault();
         //Here check the state first
-        console.log("state to register", this.state);
+        // console.log("state to register", this.state);
 
-            //This obj is the user information which will be send out to the axios
+        //This obj is the user information which will be send out to the axios
         const userInfo = {
             first: this.state.first,
             lastName: this.state.lastName,
@@ -36,15 +37,13 @@ export default class Registration extends React.Component {
         axios
             .post("/welcome", userInfo)
             .then(resp => {
-                console.log("resp from POST /welcome", resp);
-                
+                console.log("resp from POST /welcome", resp);   
+
                 //Here we change the address of the browser
                 location.replace("/");
             })
-            .catch((err) => {
-
+            .catch(err => {
                 //Renders an error if we receives a bad response form the server
-
 
                 this.setState(
                     {
@@ -52,7 +51,7 @@ export default class Registration extends React.Component {
                     },
                     () => console.log("Error in registration", this.state)
                 );
-                
+
                 console.log(err);
             });
     }
@@ -60,6 +59,8 @@ export default class Registration extends React.Component {
         return (
             <div>
                 <h1>Register</h1>
+
+                <p>Please register below to have access!</p>
 
                 <form action="">
                     <input
@@ -89,8 +90,11 @@ export default class Registration extends React.Component {
                     <button onClick={this.registerUser}>Submit</button>
                 </form>
                 {this.state.error && (
-                    <p><b>Something bad happened please try again</b></p>
+                    <p>
+                        <b>Something bad happened please try again</b>
+                    </p>
                 )}
+                <Link to="/login">Click here to Log in!</Link>
             </div>
         );
     }
