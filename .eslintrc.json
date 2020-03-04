@@ -13,7 +13,7 @@
     },
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 4 }],
-        "semi": ["error", "always"],
+        // "semi": ["error", "always"],
         "no-console": 0,
         "no-inner-declarations": 0,
         "no-sparse-arrays": 0,
@@ -21,5 +21,6 @@
         "no-unsafe-finally": 0,
         "react/prop-types": 0,
         "react/display-name": 0
+        // "react/no-unescaped-entities": false
     }
 }
