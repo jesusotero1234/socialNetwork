@@ -28,7 +28,21 @@ exports.logIn =function(email) {
     ).then(({rows})=>rows)
 }
 
+//User Info
+exports.userInfo =function(id) {
+    return db.query(
+        `SELECT email, firstName, lastName, imageUrl,id FROM userInfo WHERE id=$1`,[id]
+    ).then(({rows})=>rows)
+}
 
+//Insert User image
+exports.insertImage = function(imageUrl,id) {
+    return db.query(
+        `UPDATE userInfo 
+        SET imageUrl=$1
+        WHERE id=$2`,[imageUrl,id]
+    ).then(({rows})=>rows)
+}
 
 
 /////////////////////////////////////
@@ -47,14 +61,16 @@ exports.insertCodeReset =function(code, email) {
 }
 
 //Retrieve Code
-exports.checkCode =function() {
+exports.checkCode =function(email) {
     return db.query(
         `SELECT * FROM resetCode
-        WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`
-        
-    ).then(({rows})=>rows)
+        WHERE email=$1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`,[email]
+    ).then(({rows})=> rows)
 }
-
+// `SELECT * FROM resetCode
+// WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`
+// 
+// checkcode('jesusotero1234@gmail.com')//?
 
 //Update Password
 exports.updatePassword =function(password,email) {

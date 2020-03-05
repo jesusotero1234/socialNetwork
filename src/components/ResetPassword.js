@@ -7,7 +7,8 @@ export default class ResetPassword extends React.Component {
         super(props);
 
         this.state = {
-            currentDisplay: 1
+            currentDisplay: 1,
+            error: false
         };
         this.resetPass = this.resetPass.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -20,9 +21,10 @@ export default class ResetPassword extends React.Component {
     }
     resetPass(e, currentDisplay) {
         e.preventDefault();
-        console.log(currentDisplay)
+        console.log(currentDisplay ==2, currentDisplay ==1);
 
         let obj = {};
+
         if (currentDisplay == 1) {
             obj = {
                 currentDisplay: 1,
@@ -35,15 +37,27 @@ export default class ResetPassword extends React.Component {
                         "response from Display 1 resetPass: ",
                         response
                     );
+
+                    if (response.data.error != undefined) {
+                        console.log(response.data.error)
+                        return this.setState({
+                            error: response.data.error
+                        });
+                    }
+
                     this.setState({
                         currentDisplay: 2
-                    })
+                    });
                 })
                 .catch(err => {
-                    console.log("err: ", err)
+                    console.log(err);
+                    this.setState({
+                        error: "Please check that you wrote correct your email"
+                    });
                 });
         } else if (currentDisplay == 2) {
 
+            console.log(this.state)
             obj = {
                 currentDisplay: 2,
                 email: this.state.email,
@@ -54,20 +68,29 @@ export default class ResetPassword extends React.Component {
                 .post("/resetPass", obj)
                 .then(response => {
                     console.log(
-                        "response from Display 1 resetPass: ",
+                        "response from Display 2 resetPass: ",
                         response
                     );
+
+                    if (response.data.error != undefined) {
+                        console.log(response.data.error)
+                        return this.setState({
+                            error: response.data.error
+                        });
+                    }
+
+
+
                     this.setState({
                         currentDisplay: 3
-                    })
+                    });
                 })
                 .catch(err => {
-                    console.log("err: ", err)
+                    this.setState({
+                        error: "Please check that you wrote correct your email"
+                    });
+                    console.log("err: ", err);
                 });
-
-
-        } else {
-
         }
     }
     render() {
@@ -92,6 +115,11 @@ export default class ResetPassword extends React.Component {
                         >
                             Submit
                         </button>
+                        {this.state.error && (
+                            <p>
+                                <b>{this.state.error}</b>
+                            </p>
+                        )}
                     </div>
                 )}
                 {/*second step when the user enters the code and write the password */}
@@ -100,15 +128,32 @@ export default class ResetPassword extends React.Component {
                     <div>
                         <p>Please enter the code you have received</p>
 
-                        <input type="text" name="userCode" onChange={this.handleChange}/>
+                        <input
+                            type="text"
+                            name="userCode"
+                            onChange={this.handleChange}
+                        />
 
                         <p>Please enter a new password</p>
 
-                        <input type="password" name="password"  onChange={this.handleChange}/>
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={this.handleChange}
+                        />
 
-                        <button  onClick={e => {
-                            this.resetPass(e, this.state.currentDisplay);
-                        }}>Submit</button>
+                        <button
+                            onClick={e => {
+                                this.resetPass(e, this.state.currentDisplay);
+                            }}
+                        >
+                            Submit
+                        </button>
+                        {this.state.error && (
+                            <p>
+                                <b>{this.state.error}</b>
+                            </p>
+                        )}
                     </div>
                 )}
 

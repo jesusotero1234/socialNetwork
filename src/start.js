@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 // import axios from "axios";
 import {Welcome} from './components/Welcome'
+import App from './components/App'
 
 // function HelloWorld() {
 //     return <div>Hello, World Jesus!</div>;
@@ -13,7 +14,7 @@ if(location.pathname === '/welcome'){
     component = <Welcome />
 }else{
     // render logo 
-    component = <img src='/img/logo/feisbuk.jpg' alt="logo"/>
+    component = <App />
 }
 
 ReactDOM.render(component, document.querySelector("main"));
