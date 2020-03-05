@@ -21,7 +21,7 @@ export default class App extends React.Component {
                     first: data.data[0].firstname,
                     last: data.data[0].lastname,
                     imageUrl:
-                        data.data[0].imageUrl || " /img/userProfileDefault.png"
+                        data.data[0].imageurl || "/img/userProfileDefault.png"
                 });
                 console.log("response in componentDidMount: ", this.state);
             })
@@ -60,7 +60,6 @@ export default class App extends React.Component {
                     {this.state.uploaderVisible && (
                         <Uploader
                             finishedUploading={newUrl =>{
-                                console.log('this',this)
                                 this.setState({
                                     imageUrl: newUrl
                                 })

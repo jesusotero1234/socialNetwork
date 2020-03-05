@@ -52,7 +52,7 @@ export default class Uploader extends React.Component {
                     id="file"
                 />
                 <label htmlFor="file">Choose a file</label>
-                <button onClick={this.handleUpload} on>Submit</button>
+                <button onClick={this.handleUpload} >Submit</button>
                 {this.state.error && (
                     <p>
                         <b>{this.state.error}</b>
