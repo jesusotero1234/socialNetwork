@@ -8,5 +8,6 @@ CREATE TABLE userInfo
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     imageUrl VARCHAR(255),
+    bio VARCHAR,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

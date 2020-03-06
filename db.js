@@ -31,7 +31,7 @@ exports.logIn =function(email) {
 //User Info
 exports.userInfo =function(id) {
     return db.query(
-        `SELECT email, firstName, lastName, imageUrl,id FROM userInfo WHERE id=$1`,[id]
+        `SELECT email, firstName, lastName, imageUrl,id,bio FROM userInfo WHERE id=$1`,[id]
     ).then(({rows})=>rows)
 }
 
@@ -44,6 +44,15 @@ exports.insertImage = function(imageUrl,id) {
     ).then(({rows})=>rows)
 }
 
+
+//SaveBio
+exports.saveBio = function(id,bio) {
+    return db.query(
+        `UPDATE userInfo
+        SET bio=$2 WHERE id=$1`,
+        [id,bio]
+    ).then(({rows})=>rows)
+}
 
 /////////////////////////////////////
 /////////////////////////////////////

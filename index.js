@@ -8,7 +8,8 @@ const {
     checkCode,
     updatePassword,
     userInfo,
-    insertImage
+    insertImage,
+    saveBio
 } = require("./db");
 const { hash, compare } = require("./utils/bCrypts");
 const cookieSession = require("cookie-session");
@@ -346,6 +347,33 @@ app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+//////////////
+///Save Bio///
+/////////////
+
+app.post('/saveBio',async (req,res)=>{
+
+    console.log('saveBio post req.body', req.body)
+
+    try {
+      const sendBio=  await saveBio(req.session.userId,req.body.bio)
+        console.log("sendBio",sendBio)  
+      res.sendStatus(200)
+    } catch (error) {
+        console.log('error Save Bio: ', error)
+        res.sendStatus(500)
+    }
+
+
+
+})
+
+/////////////
+/////////////
+/////////////
+
+
 
 //DON'T TOUCH THIS
 app.get("*", function(req, res) {

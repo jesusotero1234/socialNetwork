@@ -3,17 +3,21 @@ import { HashRouter } from "react-router-dom";
 import axios from "./axios";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
+import Profile from "./Profile";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            toggle: false
+        };
     }
     componentDidMount() {
         //Mount the data to the user profile
         axios
             .get("/user")
             .then(({ data }) => {
+                console.log("APP mount data from DB", data.data[0]);
                 // Set the original state of the user
                 this.setState({
                     id: data.data[0].id,
@@ -21,9 +25,11 @@ export default class App extends React.Component {
                     first: data.data[0].firstname,
                     last: data.data[0].lastname,
                     imageUrl:
-                        data.data[0].imageurl || "/img/userProfileDefault.png"
+                        data.data[0].imageurl || "/img/userProfileDefault.png",
+                    bio: data.data[0].bio || ""
                 });
-                console.log("response in componentDidMount: ", this.state);
+
+                console.log("App ComponentDidMOunt state", this.state);
             })
             .catch(err =>
                 console.log("err in Component did mount axios: ", err)
@@ -48,25 +54,47 @@ export default class App extends React.Component {
                             first={this.state.first}
                             last={this.state.last}
                             url={this.state.imageUrl}
-                            clickHandler={() =>
-                                {
+                            clickHandler={() => {
                                 this.setState({
                                     uploaderVisible: true
-                                })
-                                console.log('this.state: ', this.state)}
-                            }
+                                });
+                                // console.log("this.state: ", this.state);
+                            }}
                         />
                     </div>
+
+                    <Profile
+                        toggleBio={(bool) => {
+                            this.setState({
+                                toggle: bool
+                            });
+                        }}
+                        data={this.state}
+                        setBio={biodata => {
+                            this.setState(
+                                {
+                                    bio: biodata
+                                },
+                                console.log("App form Bio", this.state.bio)
+                            );
+                        }}
+                        profilePic={
+                            <ProfilePic
+                                first={this.state.first}
+                                last={this.state.last}
+                                url={this.state.imageUrl}
+                            />
+                        }
+                    />
+
                     {this.state.uploaderVisible && (
                         <Uploader
-                            finishedUploading={newUrl =>{
+                            finishedUploading={newUrl => {
                                 this.setState({
                                     imageUrl: newUrl
-                                })
-                            }
-                            }
+                                });
+                            }}
                         />
-
                     )}
                 </div>
             </HashRouter>

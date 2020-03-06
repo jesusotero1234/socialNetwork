@@ -1,6 +1,8 @@
 body{
     margin: 0;
     box-sizing: border-box;
+    background-color:hsl(0,0%,26%);
+    color:hsl(0,0%,90%);
 }
 #logo{
 width: 300px;
@@ -16,4 +18,26 @@ object-fit: cover;
     width: 100px;
     height: 100px;
     object-fit: cover;  
+}
+#userHeader{
+    display: flex;
+    flex-direction:row;
+    justify-content:space-between;
+   margin: 20px;
+}
+#user-profile{
+    display: flex;
+    height: 400px;
+    flex-direction:column;
+    align-items:center;
+    text-align: center; 
+    margin-top: 50px;
+    justify-content: space-evenly;
+}
+textarea{
+     background-color:hsl(0,0%,50%);
+     color:hsl(0,0%,90%);
+      border-style: dashed;
+    padding: 10px;
+    border-radius: 10%;
 }
