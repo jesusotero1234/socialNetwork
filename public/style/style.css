@@ -34,8 +34,8 @@ object-fit: cover;
     margin-top: 50px;
     justify-content: space-evenly;
 }
-textarea{
-     background-color:hsl(0,0%,50%);
+#textarea{
+     /* background-color:hsl(0,0%,50%); */
      color:hsl(0,0%,90%);
       border-style: dashed;
     padding: 10px;

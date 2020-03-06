@@ -5,6 +5,8 @@ import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
 
+
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -42,6 +44,8 @@ export default class App extends React.Component {
 
         return (
             <HashRouter>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 <link rel="stylesheet" href="/style/style.css" />
                 <div>
                     <div id="userHeader">
