@@ -37,7 +37,7 @@ export default class Registration extends React.Component {
         );
     }
     registerUser(e) {
-        var classes = useStyles();
+        // var classes = useStyles();
         e.preventDefault();
         //Here check the state first
         // console.log("state to register", this.state);
@@ -82,6 +82,12 @@ export default class Registration extends React.Component {
                     <input
                         type="text"
                         onChange={this.handleChange}
+                        name="first"
+                        placeholder="first name"
+                    />
+                    <input
+                        type="text"
+                        onChange={this.handleChange}
                         name="lastName"
                         placeholder="last name"
                     />
@@ -109,5 +115,3 @@ export default class Registration extends React.Component {
         );
     }
 }
-
-

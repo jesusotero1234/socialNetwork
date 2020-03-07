@@ -7,7 +7,7 @@ import ResetPassword from './ResetPassword'
 export function Welcome() {
     return (
         <HashRouter>
-            <link rel="stylesheet" href="/style/style.css"/>
+
 
             <div>
                 <h1>Welcome to my first social network</h1>

@@ -5,8 +5,6 @@ import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
 
-
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -44,8 +42,14 @@ export default class App extends React.Component {
 
         return (
             <HashRouter>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                />
                 <link rel="stylesheet" href="/style/style.css" />
                 <div>
                     <div id="userHeader">
@@ -59,16 +63,22 @@ export default class App extends React.Component {
                             last={this.state.last}
                             url={this.state.imageUrl}
                             clickHandler={() => {
-                                this.setState({
-                                    uploaderVisible: true
-                                });
+                                if (!this.state.uploaderVisible) {
+                                    this.setState({
+                                        uploaderVisible: true
+                                    });
+                                } else {
+                                    this.setState({
+                                        uploaderVisible: false
+                                    });
+                                }
                                 // console.log("this.state: ", this.state);
                             }}
                         />
                     </div>
 
-                    <Profile
-                        toggleBio={(bool) => {
+                  {!this.state.uploaderVisible && <Profile
+                        toggleBio={bool => {
                             this.setState({
                                 toggle: bool
                             });
@@ -89,7 +99,7 @@ export default class App extends React.Component {
                                 url={this.state.imageUrl}
                             />
                         }
-                    />
+                    />}
 
                     {this.state.uploaderVisible && (
                         <Uploader
