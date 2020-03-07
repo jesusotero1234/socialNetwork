@@ -1,6 +1,21 @@
 import React from "react";
 import axios from "./axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+//Creating styles for the registration
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        "& .MuiTextField-root": {
+            margin: theme.spacing(1),
+            width: 200
+        }
+    }
+}));
+
+//////////////////////////////////////
 
 export default class Registration extends React.Component {
     constructor() {
@@ -22,6 +37,7 @@ export default class Registration extends React.Component {
         );
     }
     registerUser(e) {
+        var classes = useStyles();
         e.preventDefault();
         //Here check the state first
         // console.log("state to register", this.state);
@@ -37,7 +53,7 @@ export default class Registration extends React.Component {
         axios
             .post("/welcome", userInfo)
             .then(resp => {
-                console.log("resp from POST /welcome", resp);   
+                console.log("resp from POST /welcome", resp);
 
                 //Here we change the address of the browser
                 location.replace("/");
@@ -63,12 +79,6 @@ export default class Registration extends React.Component {
                 <p>Please register below to have access!</p>
 
                 <form action="">
-                    <input
-                        type="text"
-                        onChange={this.handleChange}
-                        name="first"
-                        placeholder="first name"
-                    />
                     <input
                         type="text"
                         onChange={this.handleChange}
@@ -99,3 +109,5 @@ export default class Registration extends React.Component {
         );
     }
 }
+
+
