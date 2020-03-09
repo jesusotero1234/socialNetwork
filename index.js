@@ -58,11 +58,14 @@ app.use("/saveBio", require("./routes/saveBio.js"));
 
 app.use("/upload", require("./routes/upload.js"));
 
+app.use("/api/users/", require("./routes/otherUsersProfile.js"));
+
 ////////////////
 ////////////////
 ////////////////
 
 //DON'T TOUCH THIS
+
 app.get("*", function(req, res) {
     //If the cookie doesn't exist then redirect otherwise send the index.html(react)
     if (!req.session.userId) {

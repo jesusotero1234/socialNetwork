@@ -90,6 +90,7 @@ export default class Profile extends React.Component {
     }
     render() {
         return (
+            
             <div id="user-profile">
 
                 <div className="user-profile">{this.props.profilePic}</div>
@@ -110,7 +111,7 @@ export default class Profile extends React.Component {
     }
 }
 
-function BioEditor(props) {
+ function BioEditor(props) {
     const classes = useStyles();
     const {bio} = props.data;
     // console.log('props from BioEditor ',props)

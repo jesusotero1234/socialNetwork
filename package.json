@@ -59,5 +59,9 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "quokka": {
+        "babel": true,
+        "polyfill": true
+      }
 }
