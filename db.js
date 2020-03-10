@@ -54,6 +54,27 @@ exports.saveBio = function(id,bio) {
     ).then(({rows})=>rows)
 }
 
+
+//LastJoiners
+exports.lastJoiners = function() {
+    return db.query(
+        `SELECT id, imageUrl, firstName, lastName FROM userInfo
+        ORDER BY created_at DESC
+        LIMIT 3
+        `
+        
+    ).then(({rows})=>rows)
+}
+
+//Search Users
+exports.searchUsers = function (val) {
+    return db.query(
+        `SELECT firstName, lastName , id, imageUrl FROM userInfo
+         WHERE firstName ILIKE $1;`,
+        [val + '%']
+    ).then(({rows})=>rows);
+}
+
 /////////////////////////////////////
 /////////////////////////////////////
 ////// resetCode Table Section //////

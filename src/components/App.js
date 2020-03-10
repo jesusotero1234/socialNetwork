@@ -5,13 +5,13 @@ import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import Profile from "./Profile";
 import OtherProfiles from "./OtherProfiles";
+import FindUsers from "./FindUsers";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             toggle: false,
-            uploaderVisible: false
         };
     }
     componentDidMount() {
@@ -58,7 +58,7 @@ export default class App extends React.Component {
                             url={this.state.imageUrl}
                             clickHandler={() => {
 
-                                
+
 
                                 if (!this.state.uploaderVisible) {
                                     this.setState({
@@ -118,7 +118,8 @@ export default class App extends React.Component {
                             )}
                         />
                     )}
-                    <Route path="/user/:id" component={OtherProfiles} />
+                    {!this.state.uploaderVisible && <Route path="/user/:id" component={OtherProfiles} />}
+                    <Route exact path="/users" component={FindUsers}/>
                 </div>
             </BrowserRouter>
         );

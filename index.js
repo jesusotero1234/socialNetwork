@@ -60,6 +60,9 @@ app.use("/upload", require("./routes/upload.js"));
 
 app.use("/api/users/", require("./routes/otherUsersProfile.js"));
 
+app.use("/lastJoiners", require("./routes/lastJoiners.js"));
+
+app.use("/searchUsers/", require("./routes/searchUsers.js"));
 ////////////////
 ////////////////
 ////////////////
