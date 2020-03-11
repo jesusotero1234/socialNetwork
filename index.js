@@ -63,6 +63,9 @@ app.use("/api/users/", require("./routes/otherUsersProfile.js"));
 app.use("/lastJoiners", require("./routes/lastJoiners.js"));
 
 app.use("/searchUsers/", require("./routes/searchUsers.js"));
+
+app.use("/friendship/", require("./routes/friendship.js"));
+
 ////////////////
 ////////////////
 ////////////////

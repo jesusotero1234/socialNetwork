@@ -50,3 +50,24 @@ object-fit: cover;
     padding: 10px;
     border-radius: 10%;
 }
+
+.friend-search-img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover; 
+    margin-top: 20px;
+    margin-right: 20px;
+
+}
+#lastJoiners{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    text-align: center;
+}
+
+.joiners-container{
+    display: flex;
+    flex-direction:row;
+    align-items:center;
+}
