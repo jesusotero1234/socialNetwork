@@ -17,7 +17,7 @@ export default class Uploader extends React.Component {
 
     handleUpload() {
         //Send an axios request
-        console.log("this.sate.file: ", this.state.file, this.state);
+        // console.log("this.sate.file: ", this.state.file, this.state);
         var formData = new FormData();
 
         formData.append("file", this.state.file);

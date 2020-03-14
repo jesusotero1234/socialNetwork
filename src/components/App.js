@@ -6,7 +6,7 @@ import Uploader from "./Uploader";
 import Profile from "./Profile";
 import OtherProfiles from "./OtherProfiles";
 import FindUsers from "./FindUsers";
-
+import Friends from "./Friends";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ export default class App extends React.Component {
                     bio: data.data[0].bio || ""
                 });
 
-                console.log("App ComponentDidMOunt state", this.state);
+                // console.log("App ComponentDidMOunt state", this.state);
             })
             .catch(err =>
                 console.log("err in Component did mount axios: ", err)
@@ -118,6 +118,17 @@ export default class App extends React.Component {
                             )}
                         />
                     )}
+                    {!this.state.uploaderVisible && (
+                        <Route
+                            exact
+                            path="/friends"
+                            render={() => (
+                               
+                                <Friends />
+                            )}
+                        />
+                    )}
+
                     {!this.state.uploaderVisible && <Route path="/user/:id" component={OtherProfiles} />}
                     <Route exact path="/users" component={FindUsers}/>
                 </div>

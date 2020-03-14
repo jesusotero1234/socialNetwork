@@ -189,3 +189,19 @@ exports.acceptRequest = function(senderId, receiverId) {
         .then(({ rows }) => rows);
 };
 
+
+//Friends Request for Mounting the FriendsRequest route= /friends
+exports.friendRequests = function(userId) {
+    return db
+        .query(
+            `
+            SELECT userInfo.id, firstName, lastName, imageUrl, accepted
+            FROM friendships
+            JOIN userInfo
+            ON (accepted = false AND receiver_id = $1 AND  sender_id = userInfo.id)
+            OR (accepted = true AND receiver_id = $1 AND  sender_id = userInfo.id)
+            OR (accepted = true AND  sender_id = $1 AND receiver_id = userInfo.id)
+      `,[userId]
+        )
+        .then(({ rows }) => rows);
+};

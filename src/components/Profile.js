@@ -114,7 +114,7 @@ export default class Profile extends React.Component {
  function BioEditor(props) {
     const classes = useStyles();
     const {bio} = props.data;
-    // console.log('props from BioEditor ',props)
+    console.log('props from BioEditor ',props)
 
     console.log('bio.length',bio.length)
     if( bio.length>0 && props.data.toggle == false){

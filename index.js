@@ -66,6 +66,8 @@ app.use("/searchUsers/", require("./routes/searchUsers.js"));
 
 app.use("/friendship/", require("./routes/friendship.js"));
 
+app.use("/friendsRequests", require("./routes/friendsRequests.js"));
+
 ////////////////
 ////////////////
 ////////////////

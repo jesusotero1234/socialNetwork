@@ -1,26 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
 // import axios from "axios";
-import {Welcome} from './components/Welcome'
-import App from './components/App'
+import { Welcome } from "./components/Welcome";
+import App from "./components/App";
 
-// function HelloWorld() {
-//     return <div>Hello, World Jesus!</div>;
-// }
-let component = ''
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reduxPromise from "redux-promise";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducer from './reducer/reducer'
 
-if(location.pathname === '/welcome'){
+const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(reduxPromise))
+);
+
+let component = "";
+
+if (location.pathname === "/welcome") {
     //Render registration page
-    component = <Welcome />
-}else{
-    // render logo 
-    component = <App />
+    component = <Welcome />;
+} else {
+    // render logo
+    component = (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
 }
 
 ReactDOM.render(component, document.querySelector("main"));
-
-
-
 
 //Previous statement was:
 // //Class components CAN have state but functions not
@@ -58,7 +67,7 @@ ReactDOM.render(component, document.querySelector("main"));
 //                     Hello, World {this.state.user && this.state.user.name}!
 //                 </p>
 //                 <p onClick={this.handleClick}> Im a click component </p>
-//                 <User name={this.state.user && this.state.user.name} />    
+//                 <User name={this.state.user && this.state.user.name} />
 //             </div>
 //         );
 //     }
