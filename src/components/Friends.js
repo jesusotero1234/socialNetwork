@@ -23,24 +23,45 @@ export default function Friends() {
         })();
     }, []);
 
+    let already = 0
+    let waiting = 0
+
+    if(initalState){
+    initalState.forEach(element => {
+        if(element.accepted){
+            already+=1
+        }
+        if(!element.accepted){
+            waiting += 1
+        }
+        
+    });
+}
+
+
     return (
         <>
             <div id="users-profile">
                 <div>
-                    <h1>
+                    {!!already &&( <h1>
                         <b>Already friends</b>
-                    </h1>
+                    </h1>)
+                }
                     {initalState && (
+                        <div className="alreadyfriends">
                         <AlreadyFriends initialState={initalState} />
+                        </div>
                     )}
                 </div>
 
                 <div>
-                    <h1>
+                    {!!waiting && <h1>
                         <b>Waiting to be friends</b>
-                    </h1>
+                    </h1>}
                     {initalState && (
+                        <div className="alreadyfriends">
                         <WaitingConfirmation initialState={initalState} />
+                        </div>
                     )}
                 </div>
             </div>

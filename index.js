@@ -50,6 +50,8 @@ app.use("/welcome", require("./routes/welcome.js"));
 
 app.use("/login", require("./routes/login.js"));
 
+app.use("/logout", require("./routes/logout.js"));
+
 app.use("/resetPass", require("./routes/resetPass.js"));
 
 app.use("/user", require("./routes/user.js"));

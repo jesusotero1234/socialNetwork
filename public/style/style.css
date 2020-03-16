@@ -24,6 +24,8 @@ object-fit: cover;
     flex-direction:row;
     justify-content:space-between;
    margin: 20px;
+    border-bottom: 1px solid white;
+    padding-bottom: 20px;
 }
 #user-profile{
     display: flex;
@@ -57,17 +59,65 @@ object-fit: cover;
     object-fit: cover; 
     margin-top: 20px;
     margin-right: 20px;
+    border-radius: 50%;
 
 }
 #lastJoiners{
     display: flex;
-    flex-direction:column;
+    flex-direction:row;
+    justify-content:space-evenly;
     align-items: center;
     text-align: center;
 }
+#lastJoinersP{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+}
 
+#searchFriends{
+  margin-left: 30px;
+    margin-bottom: 20px;
+}
+#searchFriends>p{
+  margin-left: 450px;
+}
+#searchFriends>div{
+  margin-left: 500px;
+}
 .joiners-container{
     display: flex;
     flex-direction:row;
     align-items:center;
+    background-color: hsl(0,0%,50%);
+    border-radius: 15%;
+    width:min-content;
+    padding: 20px;
+    margin:20px;
 }
+.joiners-container2{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:space-evenly;
+}
+.users-container{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+.alreadyfriends{
+    display: flex;
+    background-color: hsl(0,0%,50%);
+    border-radius: 15%;
+}
+
+p,h1{
+    font-family: roboto;
+}
+#userHeader>a{
+    color:white;
+    display: flex;
+    align-self:self-end;
+} 

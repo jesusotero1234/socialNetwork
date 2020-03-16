@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import axios from "./axios";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
@@ -7,11 +7,12 @@ import Profile from "./Profile";
 import OtherProfiles from "./OtherProfiles";
 import FindUsers from "./FindUsers";
 import Friends from "./Friends";
+import { Link } from "@material-ui/core";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggle: false,
+            toggle: false
         };
     }
     componentDidMount() {
@@ -52,14 +53,16 @@ export default class App extends React.Component {
                             alt="defaultPic"
                             id="logoProfile"
                         />
+
+                        <NavLink to="/friends">Friends</NavLink>
+                        <NavLink to="/users">Find People</NavLink>
+                        <NavLink to="/logout">Logout</NavLink>
+
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
                             url={this.state.imageUrl}
                             clickHandler={() => {
-
-
-
                                 if (!this.state.uploaderVisible) {
                                     this.setState({
                                         uploaderVisible: true
@@ -122,15 +125,23 @@ export default class App extends React.Component {
                         <Route
                             exact
                             path="/friends"
-                            render={() => (
-                               
-                                <Friends />
-                            )}
+                            render={() => <Friends />}
                         />
                     )}
 
-                    {!this.state.uploaderVisible && <Route path="/user/:id" component={OtherProfiles} />}
-                    <Route exact path="/users" component={FindUsers}/>
+                    {!this.state.uploaderVisible && (
+                        <Route path="/user/:id" component={OtherProfiles} />
+                    )}
+                    <Route exact path="/users" component={FindUsers} />
+                    <Route
+                        exact
+                        path="/logout"
+                        render={() =>
+                            axios
+                                .get("/logout")
+                                .then(() => location.replace("/welcome"))
+                        }
+                    />
                 </div>
             </BrowserRouter>
         );

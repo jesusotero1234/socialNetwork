@@ -1,10 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
 
+//Material UI
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+// import white from '@material-ui/core/colors/white';
+
+const useStyles = makeStyles(theme => ({    
+    root: {
+        "& > *": {
+            margin: theme.spacing(1),
+            width: 200
+        }
+    }
+}));
+
 export default function FindUsers() {
     const [newUsers, setnewUsers] = useState();
     const [searchUser, setsearchUser] = useState({ val: "" });
     const [resultsSearch, setresultsSearch] = useState([]);
+
+    const classes = useStyles();
 
     useEffect(() => {
         let abort;
@@ -32,15 +48,16 @@ export default function FindUsers() {
 
     return (
         <>
+            <p id="lastJoinersP">The last 3 joiners are </p>
             <div id="lastJoiners">
-                <p>Find new Joiners below!</p>
-
                 {newUsers &&
                     newUsers.map(el => (
                         <div className="joiners-container" key={el.id}>
                             <img
                                 className="friend-search-img"
-                                src={el.imageurl}
+                                src={
+                                    el.imageurl || "/img/userProfileDefault.png"
+                                }
                                 alt={el.firstname + el.lastname}
                             />
                             <span>
@@ -53,7 +70,10 @@ export default function FindUsers() {
             <div id="searchFriends">
                 <p>Here you can search and discover new friends</p>
 
-                <input
+                <TextField
+                    label="Search for User"
+                    variant="outlined"
+                    id="outlined-basic"
                     name="username"
                     type="text"
                     defaultValue={searchUser.val}
@@ -63,22 +83,28 @@ export default function FindUsers() {
                         })
                     }
                 />
-                {resultsSearch &&
-                    resultsSearch.map(el => (
-                        <div className="joiners-container" key={el.id}>
-                            
-                                <img
-                                    className="friend-search-img"
-                                    src={el.imageurl}
-                                    alt={el.firstname}
-                                />
-                       
-                            <span><p>
-                                {el.firstname} {el.lastname}
-                                </p>
-                            </span>
-                        </div>
-                    ))}
+                <div className="joiners-container2">
+                    {resultsSearch &&
+                        resultsSearch.map(el => (
+                            <div className="joiners-container" key={el.id}>
+                                <div>
+                                    <img
+                                        className="friend-search-img"
+                                        src={
+                                            el.imageurl ||
+                                            "/img/userProfileDefault.png"
+                                        }
+                                        alt={el.firstname}
+                                    />
+                                </div>
+                                <span>
+                                    <p>
+                                        {el.firstname} {el.lastname}
+                                    </p>
+                                </span>
+                            </div>
+                        ))}
+                </div>
             </div>
         </>
     );
