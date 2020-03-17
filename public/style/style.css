@@ -125,3 +125,6 @@ p,h1{
     height: 300px;
     overflow-y: scroll;
 }
+.chat-image-container{
+    display: flex;
+}

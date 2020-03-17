@@ -1,6 +1,7 @@
 import * as io from 'socket.io-client';
 import chatMessages  from '../actions/chatMessages';
 import newMessage  from '../actions/newMessage';
+import onlineUsers  from '../actions/onlineUsers';
 
 export let socket;
 
@@ -28,5 +29,12 @@ export const init = store => {
                 newMessage(msg)
             )
         );
+
+        socket.on('onlineUsers',
+            msg => store.dispatch(
+                onlineUsers(msg)
+            )
+        );
+        
     }
 };

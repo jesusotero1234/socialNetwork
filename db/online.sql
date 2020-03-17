@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS online;
+
+CREATE TABLE online (
+      id SERIAL PRIMARY KEY,
+      userId INT NOT NULL REFERENCES userInfo(id) UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+  );

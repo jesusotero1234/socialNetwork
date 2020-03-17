@@ -207,7 +207,7 @@ exports.friendRequests = function(userId) {
 
 /////////////////////////////////////
 /////////////////////////////////////
-////// chat Table Section //////
+////// chat Table Section ///////////
 /////////////////////////////////////
 /////////////////////////////////////
 
@@ -254,6 +254,54 @@ exports.userChatInformation = function(sender_id) {
                 LIMIT 1
           `,[sender_id]
             
+        )
+        .then(({ rows }) => rows);
+};
+
+
+/////////////////////////////////////
+/////////////////////////////////////
+////// online Table Section /////////
+/////////////////////////////////////
+/////////////////////////////////////
+
+//Insert user in online table
+exports.insertOnlineUser = function(id) {
+    return db
+        .query(
+            `
+         INSERT INTO online (userId)
+         VALUES ($1) `,
+            [id]
+        )
+        .then(({ rows }) => rows);
+};
+
+//Take info of the users who are connected
+exports.onlineUsers = function() {
+    return db
+        .query(
+            `
+                SELECT  firstName, lastName, imageUrl, online.created_at, online.id
+                FROM userInfo
+                JOIN online
+                ON ( online.userId = userInfo.id)
+                ORDER BY online.created_at DESC
+          `
+            
+        )
+        .then(({ rows }) => rows);
+};
+
+//Delete online users when they disconnect
+exports.deleteRequest = function(id) {
+    return db
+        .query(
+            `
+            DELETE FROM online 
+            WHERE userId=$1;
+          `,
+            [id]
         )
         .then(({ rows }) => rows);
 };

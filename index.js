@@ -4,7 +4,14 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 require("custom-env").env();
-const { userChatInfo, insertMessageUser, userChatInformation } = require("./db");
+const {
+    userChatInfo,
+    insertMessageUser,
+    userChatInformation,
+    insertOnlineUser,
+    onlineUsers,
+    deleteRequest
+} = require("./db");
 //Server
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" });
@@ -114,14 +121,43 @@ io.on("connection", async function(socket) {
 
     const userId = socket.request.session.userId;
 
-    //Get the last 10 messages here
+
+    socket.on('disconnect',async function () {
+       
+        //When user leave 
+
+        //1) Remove from the DB 
+        await deleteRequest(userId)
+        //2) Update state
+
+    });
+
+
+    // Get the last 10 messages here
     try {
         //Message sent to the database
         const chatStart = await userChatInfo();
 
-        console.log("chatStart: ", chatStart);
+        // console.log("chatStart: ", chatStart);
+
         //send the message to the reducer
         io.sockets.emit("chatMessages", { chatStart });
+
+        //Save online user
+        try {
+            await insertOnlineUser(userId)
+
+            const usersOnline = await onlineUsers()
+            io.sockets.emit("onlineUsers", { usersOnline });
+            console.log(usersOnline)
+
+        } catch (error) {
+            const usersOnline = await onlineUsers()
+            console.log(usersOnline)
+            io.sockets.emit("onlineUsers", { usersOnline });
+        }
+
+
     } catch (error) {
         console.log(error);
     }
@@ -133,36 +169,24 @@ io.on("connection", async function(socket) {
         console.log("userId in newMessage", userId);
 
         try {
+            //DB query to save the message
             const insertMessage = await insertMessageUser(userId, newMsg);
+            //DB query to retrive the user information
             const userData = await userChatInformation(userId);
             console.log("insertMessage: ", insertMessage);
             console.log("userData: ", userData);
-            const obj = {
-                ...userData[0],
-            };
 
-            console.log("obj", obj);
+            const obj = {
+                ...userData[0]
+            };
 
             io.sockets.emit("newMessage", obj);
         } catch (error) {
             console.log(error);
         }
-
-        //do a db query to lok up info about user
-        //we want to do a dbquery to store a new chat message into chat table
-        //we want to build up  chat message object (that  looks like a chat message)
-        //objects we Logged in getLastTenChatMessages
-        //when we have donde that we want to emit our message obj to everyone
-    });
-
-    //We need to listen for a new chat message being emitted
-
-    //io.sockets.emit('')
-    socket.on("muffin", newMsg => {
-        console.log(newMsg);
-        io.sockets.emit("muffinMagic", newMsg);
     });
 });
+
 
 //Old version before refactoring:
 
