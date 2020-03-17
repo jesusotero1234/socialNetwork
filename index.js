@@ -4,6 +4,10 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 require("custom-env").env();
+const { userChatInfo, insertMessageUser, userChatInformation } = require("./db");
+//Server
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 
 app.use(compression());
 
@@ -11,12 +15,24 @@ app.use(express.static("./public"));
 
 app.use(express.json());
 
-app.use(
-    cookieSession({
-        secret: process.env.SECRETS,
-        maxAge: 1000 * 60 * 60 * 24 * 14 //2 Weeks it will last the cookie, when it's over expire
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: process.env.SECRETS,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+
+app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+//Cookie session before websocket
+// app.use(
+//     cookieSession({
+//         secret: process.env.SECRETS,
+//         maxAge: 1000 * 60 * 60 * 24 * 14 //2 Weeks it will last the cookie, when it's over expire
+//     })
+// );
 
 app.use(
     express.urlencoded({
@@ -85,8 +101,67 @@ app.get("*", function(req, res) {
     }
 });
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening.");
+});
+
+//Server side socket code
+io.on("connection", async function(socket) {
+    console.log(`socket with the id ${socket.id} is now connected`);
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+
+    //Get the last 10 messages here
+    try {
+        //Message sent to the database
+        const chatStart = await userChatInfo();
+
+        console.log("chatStart: ", chatStart);
+        //send the message to the reducer
+        io.sockets.emit("chatMessages", { chatStart });
+    } catch (error) {
+        console.log(error);
+    }
+
+    //When the user enter a new message
+
+    socket.on("newMessage", async newMsg => {
+        console.log("New msg from chat.js component ", newMsg);
+        console.log("userId in newMessage", userId);
+
+        try {
+            const insertMessage = await insertMessageUser(userId, newMsg);
+            const userData = await userChatInformation(userId);
+            console.log("insertMessage: ", insertMessage);
+            console.log("userData: ", userData);
+            const obj = {
+                ...userData[0],
+            };
+
+            console.log("obj", obj);
+
+            io.sockets.emit("newMessage", obj);
+        } catch (error) {
+            console.log(error);
+        }
+
+        //do a db query to lok up info about user
+        //we want to do a dbquery to store a new chat message into chat table
+        //we want to build up  chat message object (that  looks like a chat message)
+        //objects we Logged in getLastTenChatMessages
+        //when we have donde that we want to emit our message obj to everyone
+    });
+
+    //We need to listen for a new chat message being emitted
+
+    //io.sockets.emit('')
+    socket.on("muffin", newMsg => {
+        console.log(newMsg);
+        io.sockets.emit("muffinMagic", newMsg);
+    });
 });
 
 //Old version before refactoring:

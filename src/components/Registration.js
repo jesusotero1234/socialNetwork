@@ -2,21 +2,6 @@ import React from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-//Creating styles for the registration
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        "& .MuiTextField-root": {
-            margin: theme.spacing(1),
-            width: 200
-        }
-    }
-}));
-
-//////////////////////////////////////
-
 export default class Registration extends React.Component {
     constructor() {
         super();

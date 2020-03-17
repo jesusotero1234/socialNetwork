@@ -7,7 +7,7 @@ import Profile from "./Profile";
 import OtherProfiles from "./OtherProfiles";
 import FindUsers from "./FindUsers";
 import Friends from "./Friends";
-import { Link } from "@material-ui/core";
+import Chat from './Chat'
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -133,6 +133,7 @@ export default class App extends React.Component {
                         <Route path="/user/:id" component={OtherProfiles} />
                     )}
                     <Route exact path="/users" component={FindUsers} />
+                    <Route exact path="/chat" component={Chat} />
                     <Route
                         exact
                         path="/logout"
@@ -148,28 +149,3 @@ export default class App extends React.Component {
     }
 }
 
-// {!this.state.uploaderVisible && (
-//     <Profile
-//         toggleBio={bool => {
-//             this.setState({
-//                 toggle: bool
-//             });
-//         }}
-//         data={this.state}
-//         setBio={biodata => {
-//             this.setState(
-//                 {
-//                     bio: biodata
-//                 },
-//                 console.log("App form Bio", this.state.bio)
-//             );
-//         }}
-//         profilePic={
-//             <ProfilePic
-//                 first={this.state.first}
-//                 last={this.state.last}
-//                 url={this.state.imageUrl}
-//             />
-//         }
-//     />
-// )}

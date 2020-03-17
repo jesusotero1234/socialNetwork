@@ -9,6 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from './reducer/reducer'
+import {init} from './components/socket'
 
 const store = createStore(
     reducer,
@@ -22,6 +23,7 @@ if (location.pathname === "/welcome") {
     component = <Welcome />;
 } else {
     // render logo
+    init(store)
     component = (
         <Provider store={store}>
             <App />

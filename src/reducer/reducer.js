@@ -12,10 +12,10 @@ export default function(state = {}, action) {
             state = {
                 ...state,
                 users: state.users.map(el => {
-                    if ((el.id == action.receiverId)) {
+                    if (el.id == action.receiverId) {
                         return {
                             ...el,
-                            accepted:true
+                            accepted: true
                         };
                     } else {
                         return el;
@@ -23,12 +23,24 @@ export default function(state = {}, action) {
                 })
             };
             break;
-            case "REMOVE_FRIENDSHIP":
-                state = {
-                    ...state,
-                    users: state.users.filter(el=> el.id != action.receiverId)
-                };
-                break;
+        case "REMOVE_FRIENDSHIP":
+            state = {
+                ...state,
+                users: state.users.filter(el => el.id != action.receiverId)
+            };
+            break;
+        case "CHAT_MESSAGES":
+            state = {
+                ...state,
+                messages: action.messages.chatStart
+            };
+            break;
+        case "CHAT_MESSAGE":
+            state = {
+                ...state,
+                messages:[ ...state.messages, {...action.message}]
+            };
+            break;
         default:
             state = {};
     }

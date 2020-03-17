@@ -163,7 +163,6 @@ exports.sendFrienshipRequest = function(senderId, receiverId) {
         .then(({ rows }) => rows);
 };
 
-
 //Delete request before the other person accepting it
 exports.deleteRequest = function(senderId, receiverId) {
     return db
@@ -177,7 +176,7 @@ exports.deleteRequest = function(senderId, receiverId) {
         .then(({ rows }) => rows);
 };
 
-//Accept request from the user 
+//Accept request from the user
 exports.acceptRequest = function(senderId, receiverId) {
     return db
         .query(
@@ -188,7 +187,6 @@ exports.acceptRequest = function(senderId, receiverId) {
         )
         .then(({ rows }) => rows);
 };
-
 
 //Friends Request for Mounting the FriendsRequest route= /friends
 exports.friendRequests = function(userId) {
@@ -201,7 +199,61 @@ exports.friendRequests = function(userId) {
             ON (accepted = false AND receiver_id = $1 AND  sender_id = userInfo.id)
             OR (accepted = true AND receiver_id = $1 AND  sender_id = userInfo.id)
             OR (accepted = true AND  sender_id = $1 AND receiver_id = userInfo.id)
-      `,[userId]
+      `,
+            [userId]
+        )
+        .then(({ rows }) => rows);
+};
+
+/////////////////////////////////////
+/////////////////////////////////////
+////// chat Table Section //////
+/////////////////////////////////////
+/////////////////////////////////////
+
+//Last 10 messages in th chat table, it should be a join to get all the data from the users
+exports.userChatInfo = function() {
+    return db
+        .query(
+            `
+                SELECT  firstName, lastName, imageUrl, message, chat.created_at, chat.id
+                FROM userInfo
+                JOIN chat
+                ON ( chat.sender_id = userInfo.id)
+                ORDER BY chat.created_at DESC
+                LIMIT 10    
+          `
+            
+        )
+        .then(({ rows }) => rows);
+};
+
+
+//Insert message in user
+exports.insertMessageUser = function(senderId, message) {
+    return db
+        .query(
+            `
+         INSERT INTO chat (sender_id, message)
+         VALUES ($1,$2) `,
+            [senderId, message]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.userChatInformation = function(sender_id) {
+    return db
+        .query(
+            `
+                SELECT  firstName, lastName, imageUrl, message, chat.created_at, chat.id
+                FROM userInfo
+                JOIN chat
+                ON ( chat.sender_id = userInfo.id)
+                WHERE chat.sender_id=$1
+                ORDER BY chat.created_at DESC
+                LIMIT 1
+          `,[sender_id]
+            
         )
         .then(({ rows }) => rows);
 };

@@ -121,3 +121,7 @@ p,h1{
     display: flex;
     align-self:self-end;
 } 
+.chat-container{
+    height: 300px;
+    overflow-y: scroll;
+}
