@@ -47,6 +47,12 @@ export default function(state = {}, action) {
                             onlineUsers: action.message.usersOnline
                         };
                         break;
+                    case "DISCONNECTED_USER":
+                        state = {
+                            ...state,
+                            onlineUsers: state.onlineUsers.filter(el=>el.userinfoid !== action.userId.userId)
+                        };
+                        break;
                     default:
                         state = {};
     }

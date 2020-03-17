@@ -282,7 +282,7 @@ exports.onlineUsers = function() {
     return db
         .query(
             `
-                SELECT  firstName, lastName, imageUrl, online.created_at, online.id
+                SELECT  firstName, lastName, imageUrl, online.created_at, online.id, userInfo.id as UserInfoId
                 FROM userInfo
                 JOIN online
                 ON ( online.userId = userInfo.id)

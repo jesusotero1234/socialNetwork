@@ -129,7 +129,7 @@ io.on("connection", async function(socket) {
         //1) Remove from the DB 
         await deleteRequest(userId)
         //2) Update state
-
+        io.sockets.emit("disconnectedUser", { userId });
     });
 
 
@@ -154,7 +154,7 @@ io.on("connection", async function(socket) {
         } catch (error) {
             const usersOnline = await onlineUsers()
             console.log(usersOnline)
-            io.sockets.emit("onlineUsers", { usersOnline });
+            // io.sockets.emit("onlineUsers", { usersOnline });
         }
 
 
