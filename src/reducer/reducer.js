@@ -1,5 +1,5 @@
 export default function(state = {}, action) {
-    console.log("state and action from reducer: ", state, action);
+    console.log("state and action from reducer: ", "state",state, "action",action);
 
     switch (action.type) {
                     case "REQUEST_STATE":
@@ -44,13 +44,13 @@ export default function(state = {}, action) {
                     case "ONLINE_USERS":
                         state = {
                             ...state,
-                            onlineUsers: action.message.usersOnline
+                            onlineUsers: action.message.usersOnlineArray
                         };
                         break;
                     case "DISCONNECTED_USER":
                         state = {
                             ...state,
-                            onlineUsers: state.onlineUsers.filter(el=>el.userinfoid !== action.userId.userId)
+                            onlineUsers: state.onlineUsers.filter(el=>el.id !== action.userId.userIdDisconnect.userId)
                         };
                         break;
                     default:
