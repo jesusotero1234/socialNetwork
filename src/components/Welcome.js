@@ -1,18 +1,22 @@
 import React from "react";
 import Registration from "./Registration";
-import { HashRouter, Route} from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 import Login from "./Login";
-import ResetPassword from './ResetPassword'
+import ResetPassword from "./ResetPassword";
 
 export function Welcome() {
     return (
         <HashRouter>
-
-
-            <div>
+            <div className="start">
                 <h1>Welcome to my first social network</h1>
-                <img src="/img/logo/feisbuk.jpg" alt="logo" id="logo" />
-               
+                <img
+                    src="/img/logo/feisbuk.jpg"
+                    alt="logo"
+                    id="logo"
+                    onClick={() => {
+                        location.replace("/");
+                    }}
+                />
 
                 <div>
                     <Route exact component={Registration} path="/" />
@@ -20,6 +24,6 @@ export function Welcome() {
                     <Route exact component={ResetPassword} path="/resetPass" />
                 </div>
             </div>
-        </HashRouter>   
+        </HashRouter>
     );
 }

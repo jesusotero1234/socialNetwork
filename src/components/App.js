@@ -41,7 +41,7 @@ export default class App extends React.Component {
     }
     render() {
         if (!this.state.id) {
-            return <img src="progressbar.gif" alt="progressbar" />;
+            return <img src="/img/progress.gif" alt="progressbar" />;
         }
 
         return (
@@ -52,10 +52,14 @@ export default class App extends React.Component {
                             src="/img/logo/feisbuk.jpg"
                             alt="defaultPic"
                             id="logoProfile"
+                            onClick={() => {
+                                location.replace("/");
+                            }}
                         />
-
+                        <NavLink to="/">Profile</NavLink>
                         <NavLink to="/friends">Friends</NavLink>
                         <NavLink to="/users">Find People</NavLink>
+                        <NavLink to="/chat">Chat</NavLink>
                         <NavLink to="/logout">Logout</NavLink>
 
                         <ProfilePic

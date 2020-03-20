@@ -43,15 +43,15 @@ export default class Uploader extends React.Component {
     //we also have to make something to return with an event to make the parent aware that we change the state
     render() {
         return (
-            <div>
+            <div className="registration-container">
                 <input
                     type="file"
                     onChange={this.handleChange}
                     name="file"
                     accept="image/*"
-                    id="file"
+                    className="file1"
                 />
-                <label htmlFor="file">Choose a file</label>
+                <label className="file"  htmlFor="file">Choose a file</label>
                 <button onClick={this.handleUpload} >Submit</button>
                 {this.state.error && (
                     <p>

@@ -1,25 +1,29 @@
-const express= require('express');
-const router = express.Router()
-const {addUserUserInfo} = require("../db");
+const express = require("express");
+const router = express.Router();
+const { addUserUserInfo } = require("../db");
 const { hash } = require("../utils/bCrypts");
 require("custom-env").env();
 const { sendEmail } = require("../utils/email");
-const path = require('path')
+const path = require("path");
+const validator = require("email-validator");
 
-console.log(path.join(__dirname,'../index.html'))
+console.log(path.join(__dirname, "../index.html"));
 
 router.get("/", (req, res) => {
-
     console.log("req.session.id: ", req.session);
     if (req.session.userId) {
         res.redirect("/");
     } else {
-        res.sendFile(path.join(__dirname,'../index.html'));
+        res.sendFile(path.join(__dirname, "../index.html"));
     }
 });
 
 router.post("/", (req, res) => {
     const { first, lastName, email, password } = req.body;
+
+    if (!validator.validate(email)|| first.trim().length == 0|| lastName.trim().length == 0|| password.trim().length == 0) {
+        res.redirect(500, "/welcome");
+    }
 
     //Here we hashed the password and then send the info to the DB
     hash(password).then(hashedpass => {

@@ -59,6 +59,9 @@ export default function FindUsers() {
                                     el.imageurl || "/img/userProfileDefault.png"
                                 }
                                 alt={el.firstname + el.lastname}
+                                onClick={()=>  {
+                                    location.replace(`/user/${el.id}`)
+                                } }
                             />
                             <span>
                                 {el.firstname} {el.lastname}
@@ -95,6 +98,9 @@ export default function FindUsers() {
                                             "/img/userProfileDefault.png"
                                         }
                                         alt={el.firstname}
+                                        onClick={()=>  {
+                                            location.replace(`/user/${el.id}`)
+                                        } }
                                     />
                                 </div>
                                 <span>

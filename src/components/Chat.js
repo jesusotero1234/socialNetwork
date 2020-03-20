@@ -8,6 +8,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
+import Filter from "bad-words";
+
+// console.log(filter.clean("Don't be an ash0le"));
 
 console.log(grey);
 
@@ -47,8 +50,16 @@ export default function Chat() {
     const keyCheck = e => {
         if (e.key === "Enter") {
             e.preventDefault();
-            //para borrar seria e.target.value = ''
-            socket.emit("newMessage", e.target.value);
+            console.log(e.target.value.trim().length == 0)
+            if(e.target.value.trim().length == 0){
+                e.target.value = "";
+                return
+            }
+            
+            let filter = new Filter();
+            let checkedWord = filter.clean(e.target.value)
+            console.log(checkedWord)
+            socket.emit("newMessage", checkedWord);
             e.target.value = "";
         }
     };

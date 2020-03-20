@@ -46,7 +46,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="registration-container">
                 <form >
                     <input
                         type="text"

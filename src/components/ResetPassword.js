@@ -87,7 +87,7 @@ export default class ResetPassword extends React.Component {
                 })
                 .catch(err => {
                     this.setState({
-                        error: "Please check that you wrote correct your email"
+                        error: "Please check that you wrote correct your E-mail"
                     });
                     console.log("err: ", err);
                 });
@@ -95,13 +95,13 @@ export default class ResetPassword extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="registration-container">
                 <h1>Reset Password</h1>
 
                 {/*First step when the user introduce their email*/}
 
                 {this.state.currentDisplay == 1 && (
-                    <div>
+                    <div className="registration-container">
                         <p>Please enter your email</p>
                         <input
                             type="text"
@@ -125,7 +125,7 @@ export default class ResetPassword extends React.Component {
                 {/*second step when the user enters the code and write the password */}
 
                 {this.state.currentDisplay == 2 && (
-                    <div>
+                    <div className="registration-container">
                         <p>Please enter the code you have received</p>
 
                         <input

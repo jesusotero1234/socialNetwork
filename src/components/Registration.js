@@ -58,7 +58,7 @@ export default class Registration extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="registration-container">
                 <h1>Register</h1>
 
                 <p>Please register below to have access!</p>
