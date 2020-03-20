@@ -81,6 +81,9 @@ export default function Chat() {
                                                 "/img/userProfileDefault.png"
                                             }
                                             alt={el.firstname + el.lastname}
+                                            onClick={()=>  {
+                                                location.replace(`/user/${el.id}`)
+                                            } }
                                         />
                                         <div className="message-container">
                                             <span>
@@ -131,6 +134,9 @@ export default function Chat() {
                                             "/img/userProfileDefault.png"
                                         }
                                         alt={el.firstname + el.lastname}
+                                        onClick={()=>  {
+                                            location.replace(`/user/${el.id}`)
+                                        } }
                                     />
                                     <div className="message-container">
                                         <span>
